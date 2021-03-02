@@ -30,6 +30,15 @@ router.get('/myList', validateSession, (req, res) => {
 });
 
 
+router.get('/finished', validateSession, (req, res) => {
+    let userid = req.user.id
+    Books.findAll({
+        where: {owner: userid, finished: true}
+    })
+    .then(book => res.status(200).json(book))
+    .catch(err => res.status(500).json({error: err}))
+});
+
 router.put('/update/:entryId', validateSession, function (req, res) {
     const updateBooksEntry = {
         title: req.body.books.title,
