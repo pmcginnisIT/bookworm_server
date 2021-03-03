@@ -9,10 +9,9 @@ router.post('/create', validateSession, (req, res) => {
         owner: req.user.id,
         title: req.body.books.title,
         author: req.body.books.author,
+        genre: req.body.books.genre,
         finished: req.body.books.finished,
-        tbr: req.body.books.tbr,
-        genre: req.body.books.genre
-       
+        tbr: req.body.books.tbr
     }
     Books.create(BooksEntry)
     .then(book => res.status(200).json(book))
@@ -30,6 +29,15 @@ router.get('/myList', validateSession, (req, res) => {
     .catch(err => res.status(500).json({error: err}))
 });
 
+
+router.get('/finished', validateSession, (req, res) => {
+    let userid = req.user.id
+    Books.findAll({
+        where: {owner: userid, finished: true}
+    })
+    .then(book => res.status(200).json(book))
+    .catch(err => res.status(500).json({error: err}))
+});
 
 router.put('/update/:entryId', validateSession, function (req, res) {
     const updateBooksEntry = {
@@ -50,9 +58,7 @@ router.put('/update/:entryId', validateSession, function (req, res) {
 
 router.get('/bookList', (req, res) => {
     
-    Books.findAll({
-        where: {}
-    })
+    Books.findAll()
     .then(book => res.status(200).json(book))
     .catch(err => res.status(500).json({error: err})) 
 });
