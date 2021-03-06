@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         finished: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            allowNull: true
         },
         tbr: {
             type: DataTypes.BOOLEAN,
-            allowNull: true
+            allowNull: false
         },
     })
     return Books;

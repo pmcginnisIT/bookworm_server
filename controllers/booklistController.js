@@ -56,7 +56,7 @@ router.put('/update/:entryId', validateSession, function (req, res) {
 });
 
 
-router.get('/bookList', validateSession, (req, res) => {
+router.get('/bookList', (req, res) => {
     
     Books.findAll()
     .then(book => res.status(200).json(book))
